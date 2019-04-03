@@ -1,7 +1,7 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 
-import * as firebase from 'firebase';
+import * as firebase from "firebase";
 
 //Initialize Firebase
 const firebaseConfig = {
@@ -10,16 +10,32 @@ const firebaseConfig = {
   databaseURL: "https://rn-expo-firebase.firebaseio.com",
   projectId: "rn-expo-firebase",
   storageBucket: "rn-expo-firebase.appspot.com"
-}
+};
 
 firebase.initializeApp(firebaseConfig);
+
+import {
+  Container,
+  Content,
+  Header,
+  Form,
+  Input,
+  Item,
+  Button,
+  Label
+} from "native-base";
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Open up App.js to start working on your app!</Text>
-      </View>
+      <Container>
+        <Form>
+          <Item>
+            <Label>Email</Label>
+            <Input autoCorrect={false} autoCapitalize="none" />
+          </Item>
+        </Form>
+      </Container>
     );
   }
 }
@@ -27,8 +43,8 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });
