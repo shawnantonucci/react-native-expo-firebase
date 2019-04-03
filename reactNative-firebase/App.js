@@ -35,33 +35,57 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    firebase.auth().onAuthStateChanged(user => {
+      if (user != null) {
+        console.log(user);
+      }
+    });
+  }
+
   signUpUser = (email, password) => {
-
-    try{
-
-      if(this.state.password.length < 6) {
-        alert("Please enter at least 6 characters")
+    try {
+      if (this.state.password.length < 6) {
+        alert("Please enter at least 6 characters");
         return;
       }
 
       firebase.auth().createUserWithEmailAndPassword(email, password);
-    }
-    catch(error) {
-      console.log(error.toString())
+    } catch (error) {
+      console.log(error.toString());
     }
   };
 
   logInUser = (email, password) => {
-
     try {
-      firebase.auth().signInWithEmailAndPassword(email, password).then(user => {
-        console.log(user);
-      })
-    }
-    catch(error) {
-      console.log(error.toString())
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(user => {
+          console.log(user);
+        });
+    } catch (error) {
+      console.log(error.toString());
     }
   };
+
+  async loginWithFacebook() {
+    const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync(
+      "676998189401195",
+      { permissions: ["public_profile"] }
+    );
+
+    if (type == "success") {
+      const credential = firebase.auth.FacebookAuthProvider.credential(token);
+
+      firebase
+        .auth()
+        .signInWithCredential(credential)
+        .catch(error => {
+          console.log(error);
+        });
+    }
+  }
 
   render() {
     return (
@@ -106,6 +130,16 @@ export default class App extends React.Component {
             }
           >
             <Text style={{ color: "white" }}>Sign Up</Text>
+          </Button>
+
+          <Button
+            style={{ marginTop: 10 }}
+            full
+            rounded
+            primary
+            onPress={() => this.loginWithFacebook()}
+          >
+            <Text style={{ color: "white" }}>Login With Facebook</Text>
           </Button>
         </Form>
       </Container>
