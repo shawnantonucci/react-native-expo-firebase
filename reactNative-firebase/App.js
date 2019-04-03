@@ -28,12 +28,24 @@ import {
 export default class App extends React.Component {
   render() {
     return (
-      <Container>
+      <Container style={styles.container}>
         <Form>
-          <Item>
+          <Item floatingLabel>
             <Label>Email</Label>
             <Input autoCorrect={false} autoCapitalize="none" />
           </Item>
+
+          <Item floatingLabel>
+            <Label>Password</Label>
+            <Input
+              secureTextEntry={true}
+              autoCorrect={false}
+              autoCapitalize="none"
+            />
+          </Item>
+          <Button style={{ marginTop: 10 }} full rounded success>
+            <Text>Login</Text>
+          </Button>
         </Form>
       </Container>
     );
@@ -44,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center"
+    justifyContent: "center",
+    padding: 10
   }
 });
