@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import * as firebase from "firebase";
+import MainPage from './components/MainPage';
 
 //Initialize Firebase
 const firebaseConfig = {
@@ -31,7 +32,8 @@ export default class App extends React.Component {
 
     this.state = {
       email: "",
-      password: ""
+      password: "",
+      loggedIn: false
     };
   }
 
@@ -39,6 +41,7 @@ export default class App extends React.Component {
     firebase.auth().onAuthStateChanged(user => {
       if (user != null) {
         console.log(user);
+        this.setState({loggedIn: true})
       }
     });
   }
@@ -88,7 +91,13 @@ export default class App extends React.Component {
   }
 
   render() {
-    return (
+
+    if(this.state.loggedIn) {
+      return (
+        <MainPage />
+      )
+    } else {
+      return (
       <Container style={styles.container}>
         <Form>
           <Item floatingLabel>
@@ -143,7 +152,8 @@ export default class App extends React.Component {
           </Button>
         </Form>
       </Container>
-    );
+      )
+    }
   }
 }
 
