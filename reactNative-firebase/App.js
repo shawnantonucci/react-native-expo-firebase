@@ -94,7 +94,7 @@ export default class App extends React.Component {
 
     if(this.state.loggedIn) {
       return (
-        <MainPage />
+        <MainPage firebase={this.firebase} />
       )
     } else {
       return (
